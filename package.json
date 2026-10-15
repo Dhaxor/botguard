@@ -1,0 +1,27 @@
+{
+  "name": "botguard-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/cli",
+    "apps/web"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "vitest run",
+    "test:live": "cross-env BOTGUARD_LIVE=1 vitest run",
+    "typecheck": "tsc -p packages/core --noEmit && tsc -p packages/cli --noEmit",
+    "popular:update": "tsx scripts/update-popular.ts",
+    "web": "npm run dev -w @botguard/web"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.25.0",
+    "npm-high-impact": "^1.13.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.0"
+  }
+}

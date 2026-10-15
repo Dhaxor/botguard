@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.botguard-cache/
+.vercel
+.env*
+!.env.example
+coverage/
+*.log
+.DS_Store

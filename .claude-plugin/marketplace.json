@@ -1,0 +1,17 @@
+{
+  "name": "botguard",
+  "owner": {
+    "name": "BotGuard"
+  },
+  "metadata": {
+    "description": "Supply-chain protection for people building crypto trading bots with Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "botguard",
+      "source": "./plugin",
+      "description": "Blocks malicious, typosquatted and impersonating npm/PyPI installs in Claude Code, plus a safe-trading-bots skill.",
+      "version": "0.1.0"
+    }
+  ]
+}

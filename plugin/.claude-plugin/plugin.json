@@ -1,0 +1,13 @@
+{
+  "name": "botguard",
+  "version": "0.1.0",
+  "description": "Blocks installs of known-malicious, typosquatted and brand-impersonating npm/PyPI packages before Claude runs them, and teaches Claude to build crypto trading bots without leaking keys.",
+  "author": {
+    "name": "BotGuard",
+    "url": "https://github.com/Dhaxor"
+  },
+  "homepage": "https://github.com/Dhaxor/botguard",
+  "repository": "https://github.com/Dhaxor/botguard",
+  "license": "MIT",
+  "keywords": ["security", "supply-chain", "npm", "pypi", "malware", "crypto", "trading-bot", "polymarket"]
+}

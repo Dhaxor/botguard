@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0b0d;
+  --color-panel: #111317;
+  --color-panel-2: #16191e;
+  --color-line: #23272e;
+  --color-line-2: #2e333c;
+  --color-text: #eceef1;
+  --color-muted: #a2a9b2;
+  --color-dim: #6b727b;
+  --color-accent: #8cf5c9;
+  --color-accent-deep: #1f6b52;
+  --color-critical: #ff4d5e;
+  --color-high: #ff8a3d;
+  --color-medium: #f3c84b;
+  --color-low: #6cb6ff;
+  --color-ok: #3ddc97;
+
+  --font-sans: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-plex), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  color: var(--color-text);
+}
+
+/* Faint lab grid behind the hero. */
+.lab-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 75%);
+}
+
+.glow-accent {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-accent) 30%, transparent), 0 10px 40px -12px color-mix(in oklab, var(--color-accent) 40%, transparent);
+}
+
+@keyframes scan-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(260%); }
+}
+
+.scan-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-accent) 70%, transparent), transparent);
+  animation: scan-sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes flow-dash {
+  to { stroke-dashoffset: -24; }
+}
+
+.flow-line {
+  stroke-dasharray: 6 6;
+  animation: flow-dash 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-bar::after,
+  .flow-line {
+    animation: none;
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
