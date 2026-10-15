@@ -8,7 +8,7 @@ It ships three ways:
 
 | | What it does |
 |---|---|
-| **Web scanner** (`apps/web`) | Paste a GitHub URL, `npm:name`, `pypi:name` or Solidity source and get a verdict, evidence and a sandbox money-flow diagram. |
+| **Web scanner** (`apps/web`) | Live at **https://botguard-scanner.vercel.app**. Paste a GitHub URL, `npm:name`, `pypi:name` or Solidity source and get a verdict, evidence and a sandbox money-flow diagram. |
 | **CLI** (`packages/cli`) | `botguard scan <target>` for terminals/CI, `botguard check "<command>"` to test the install guard. |
 | **Claude Code guard** (`plugin/`) | A PreToolUse hook that checks every `npm`/`pnpm`/`yarn`/`bun`/`npx`/`pip`/`uv`/`pipx`/`poetry`, `git clone` and `curl \| sh` Claude is about to run. Known malware and strong impostors are blocked; borderline cases ask you; everything else stays silent. Plus a `safe-trading-bots` skill. |
 
@@ -101,6 +101,10 @@ Known-bad caught: every `polymarket-*` package from the 2026 campaign, `ts-bign`
 - The hook checks direct packages, manifests and lockfiles against intel; it doesn't download and scan every transitive tarball.
 - The sandbox traces ETH only (not ERC-20 approvals or transfers) and calls functions with default arguments.
 - Official-publisher checks trust npm scopes and verified publisher emails; PyPI checks rely on project URLs, email domains and age.
+
+## Deploying the web scanner
+
+The live site runs on Vercel with Root Directory `apps/web`. Vercel installs only that workspace, so every package its build needs (including `typescript`) is declared in `apps/web/package.json` or `packages/core`. Optional environment variable: `GITHUB_TOKEN` (a fine-grained token with read-only access to public repositories) lifts GitHub's 60 requests/hour limit for repo metadata; without it, scans still run but may skip stars, age and owner checks.
 
 ## Layout
 

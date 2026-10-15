@@ -11,7 +11,7 @@ process.stdin.setEncoding("utf8");
 process.stdin.on("data", (chunk) => raw += chunk);
 process.stdin.on("end", async () => {
   if (!commandToCheck(raw)) process.exit(0);
-  const { runClaudeCodeHook } = await import("./botguard-hook-KD6QAMWV.mjs");
+  const { runClaudeCodeHook } = await import("./botguard-hook-57YNL6B2.mjs");
   const out = await runClaudeCodeHook(raw);
   if (out.stdout) process.stdout.write(out.stdout);
   process.exit(out.exitCode);

@@ -23,6 +23,7 @@ export function starBurst(times: Date[]): number {
 }
 
 const BOT_WORDS = /\b(?:bot|mev|front[- ]?run|sniper|arbitrage|copy[- ]?trad|polymarket|kalshi|hyperliquid|pump\.?fun|drainer|wallet)\b/i;
+const DOCS_OR_SOURCE = /(?:^|[-_.])(?:docs?|sphinx|html|manual|source|src)(?:[-_.]|$)/i;
 
 export function repoSignals(input: {
   repo: GithubRepo;
@@ -112,14 +113,18 @@ export function repoSignals(input: {
       evidence: [link],
     });
   }
-  const exe = (input.assets ?? []).filter((a) => /\.(exe|scr|msi|zip|rar|7z|dmg|apk)$/i.test(a.name));
-  if (exe.length && isBotish) {
+  // Wheels, sdists, npm packs and docs bundles are normal release artifacts; programs and opaque archives aren't.
+  const shipped = (input.assets ?? []).filter(
+    (a) => /\.(exe|scr|msi|dmg|pkg|apk|bat|cmd|vbs|jar|zip|rar|7z)$/i.test(a.name) && !DOCS_OR_SOURCE.test(a.name),
+  );
+  if (shipped.length && isBotish) {
+    const established = owner?.type === "Organization" && (ownerAge ?? 0) > 2 * 365;
     findings.push({
       id: "repo.release-binaries",
-      severity: "medium",
+      severity: established ? "low" : "medium",
       category: "repo",
       title: "Releases ship executables or archives",
-      detail: `Releases include ${exe.map((a) => a.name).slice(0, 3).join(", ")}. A downloaded bot binary can do anything; the source in the repo may not match it.`,
+      detail: `Releases include ${shipped.map((a) => a.name).slice(0, 3).join(", ")}. A downloaded bot binary can do anything; the source in the repo may not match it.`,
       evidence: [link],
     });
   }

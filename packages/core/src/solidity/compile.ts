@@ -84,7 +84,17 @@ async function remoteCompiler(build: BuildInfo, cacheDir: string): Promise<SolcC
     if (digest !== build.sha256) throw new Error(`Cached compiler ${build.path} is corrupted; delete ${file}`);
   }
   const wrapper = require("solc/wrapper") as (soljson: unknown) => SolcCompiler;
-  return wrapper(require(file));
+  return wrapper(requireDownloaded(file));
+}
+
+/**
+ * Node's own require for a compiler downloaded at runtime. Reached through process.getBuiltinModule so
+ * bundlers (Next's Turbopack) leave it alone: a bundled require can't load a file that only exists at runtime.
+ */
+function requireDownloaded(file: string): unknown {
+  const getBuiltin = (process as { getBuiltinModule?: (id: string) => unknown }).getBuiltinModule;
+  const nodeModule = getBuiltin?.("node:module") as typeof import("node:module") | undefined;
+  return (nodeModule ?? { createRequire }).createRequire(file)(file);
 }
 
 async function pickCompiler(range: string | undefined, cacheDir: string): Promise<SolcCompiler> {
