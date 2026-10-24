@@ -22,7 +22,7 @@ Bot builders are a prime target in 2026: fake "Polymarket bot" repos with key-st
 
 - Copy package names from the provider's own docs. Never "fix" a failed install by trying a similar-looking name.
 - If BotGuard blocks an install, do not work around it. Tell the user what was blocked and why.
-- Before running a cloned bot repo, scan it with BotGuard: paste the URL into https://botguard-scanner.vercel.app, or run `node packages/cli/dist/cli.mjs scan <github-url>` from a BotGuard checkout. Read `package.json` scripts and every dependency name first.
+- Before running a cloned bot repo, scan it with BotGuard: paste the URL into https://botguard-scanner.vercel.app, or run `npx botguard scan <github-url>`. Read `package.json` scripts and every dependency name first.
 
 ## Keys and wallets
 
@@ -34,7 +34,7 @@ Bot builders are a prime target in 2026: fake "Polymarket bot" repos with key-st
 
 ## Scam patterns to refuse
 
-- "Deploy this contract in Remix, send it ETH/BNB, then call `start()`." The contract forwards the deposit to an address hidden in string fragments (`callMempool`, `parseMemoryPool`, `checkLiquidity`...). Scan the contract with BotGuard (https://botguard-scanner.vercel.app, or `node packages/cli/dist/cli.mjs scan Contract.sol`): it executes the contract in a sandbox EVM and shows where the money goes.
+- "Deploy this contract in Remix, send it ETH/BNB, then call `start()`." The contract forwards the deposit to an address hidden in string fragments (`callMempool`, `parseMemoryPool`, `checkLiquidity`...). Scan the contract with BotGuard (https://botguard-scanner.vercel.app, or `npx botguard scan Contract.sol`): it executes the contract in a sandbox EVM and shows where the money goes.
 - Bots that require "activation fees", disabling antivirus, or downloading an `.exe`.
 - Guaranteed or daily profit claims.
 

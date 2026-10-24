@@ -130,13 +130,16 @@ export default function Home() {
                 <CopyLine prompt=">" text={`/plugin marketplace add ${SITE.repo}`} />
                 <CopyLine prompt=">" text="/plugin install botguard@botguard" />
               </div>
-              <p className="mt-3 text-sm text-dim">
+              <p className="mt-4 text-sm text-dim">
                 Rather use a settings hook than a plugin?{" "}
                 <a href={`https://github.com/${SITE.repo}#claude-code-guard`} className="text-muted underline decoration-line-2 underline-offset-4 hover:text-accent">
-                  Install the CLI from source
+                  Install the CLI
                 </a>{" "}
-                and run <span className="font-mono text-muted">botguard init claude</span>.
+                and add the hook:
               </p>
+              <div className="mt-2">
+                <CopyLine text="npm i -g botguard && botguard init claude" />
+              </div>
             </div>
             <div className="min-w-0 overflow-hidden rounded-2xl border border-line-2 bg-[#07080a] shadow-2xl shadow-black/40">
               <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
@@ -193,10 +196,10 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-8">
-            <p className="text-sm text-muted">Prefer the terminal? The CLI runs from source (Node 20+):</p>
+            <p className="text-sm text-muted">Prefer the terminal? The CLI is on npm (Node 20+):</p>
             <div className="mt-2 space-y-2">
-              <CopyLine text={`git clone https://github.com/${SITE.repo}.git && cd ${SITE.repo.split("/")[1]} && npm install && npm run build`} />
-              <CopyLine text="node packages/cli/dist/cli.mjs scan github.com/owner/some-bot" />
+              <CopyLine text="npx botguard scan github.com/owner/some-bot" />
+              <CopyLine text="npx botguard scan npm:some-package" />
             </div>
           </div>
         </section>

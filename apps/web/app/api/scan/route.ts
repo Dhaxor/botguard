@@ -1,6 +1,5 @@
 import { scan, type TargetHint } from "@botguard/core";
 import { NextResponse } from "next/server";
-import { SITE } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -26,7 +25,7 @@ function rateLimited(ip: string): boolean {
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (rateLimited(ip)) {
-    return NextResponse.json({ error: `Too many scans from your network. Try again in a few minutes, or run the CLI from source: github.com/${SITE.repo}` }, { status: 429 });
+    return NextResponse.json({ error: "Too many scans from your network. Try again in a few minutes, or scan from your terminal: npx botguard scan <target>" }, { status: 429 });
   }
   let body: { input?: unknown; kind?: unknown };
   try {

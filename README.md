@@ -9,7 +9,7 @@ It ships three ways:
 | | What it does |
 |---|---|
 | **Web scanner** (`apps/web`) | Live at **https://botguard-scanner.vercel.app**. Paste a GitHub URL, `npm:name`, `pypi:name` or Solidity source and get a verdict, evidence and a sandbox money-flow diagram. |
-| **CLI** (`packages/cli`) | `botguard scan <target>` for terminals/CI, `botguard check "<command>"` to test the install guard. |
+| **CLI** ([`botguard` on npm](https://www.npmjs.com/package/botguard)) | `npx botguard scan <target>` for terminals/CI, `botguard check "<command>"` to test the install guard. |
 | **Claude Code guard** (`plugin/`) | A PreToolUse hook that checks every `npm`/`pnpm`/`yarn`/`bun`/`npx`/`pip`/`uv`/`pipx`/`poetry`, `git clone` and `curl \| sh` Claude is about to run. Known malware and strong impostors are blocked; borderline cases ask you; everything else stays silent. Plus a `safe-trading-bots` skill. |
 
 ## Why
@@ -25,7 +25,7 @@ The searches behind this (Google Trends, Oct 2026): "polymarket trading bot" +2,
 
 ```bash
 npm install            # workspaces: packages/core, packages/cli, apps/web
-npm test               # 45 offline tests
+npm test               # 48 offline tests
 npm run test:live      # +10 tests against npm, PyPI, OSV and GitHub
 npm run build          # packages/cli/dist/cli.mjs + plugin/hooks/botguard-hook*.mjs
 npm run web            # http://localhost:3230
@@ -35,13 +35,11 @@ Node 20+. `GITHUB_TOKEN` raises GitHub API limits (60/h unauthenticated).
 
 ## CLI
 
-The CLI isn't on npm yet, so run it from a checkout (Node 20+):
+On npm as [`botguard`](https://www.npmjs.com/package/botguard) (Node 20+):
 
 ```bash
-git clone https://github.com/Dhaxor/botguard.git && cd botguard
-npm install && npm run build
-node packages/cli/dist/cli.mjs scan github.com/someone/polymarket-bot
-cd packages/cli && npm link     # optional: puts `botguard` on your PATH
+npx botguard scan github.com/someone/polymarket-bot   # run without installing
+npm i -g botguard                                     # or put `botguard` on your PATH
 ```
 
 Then:
@@ -56,7 +54,7 @@ botguard check "npm i axois && pip install polymarket-client"
 botguard init claude [--user] [--dry-run]      # add the hook to Claude Code settings
 ```
 
-Exit codes: `0` no red flags / caution, `1` suspicious, `2` dangerous, `3` error. `--json` prints the full report.
+Exit codes: `0` no red flags / caution, `1` suspicious, `2` dangerous, `3` error. `--json` prints the full report. To run your own build instead, `npm run build` and use `node packages/cli/dist/cli.mjs`.
 
 ## Claude Code guard
 
@@ -67,7 +65,7 @@ As a plugin:
 /plugin install botguard@botguard
 ```
 
-Without the plugin: install the CLI from source (see [CLI](#cli)) and run `botguard init claude`, which adds the hook to `.claude/settings.json` (`--user` for `~/.claude/settings.json`). Local plugin testing: `claude --plugin-dir ./plugin`. Either way the hook needs Node 20+ on your PATH.
+Without the plugin: `npm i -g botguard && botguard init claude` adds the hook to `.claude/settings.json` (`--user` for `~/.claude/settings.json`). Install globally rather than running `init` through npx: the hook runs the installed CLI's own files. Local plugin testing: `claude --plugin-dir ./plugin`. Either way the hook needs Node 20+ on your PATH.
 
 How it decides:
 

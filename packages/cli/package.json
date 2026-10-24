@@ -2,6 +2,18 @@
   "name": "botguard",
   "version": "0.1.0",
   "description": "Scan crypto trading-bot repos, npm/PyPI packages and Solidity contracts for malware and wallet drainers. Includes a Claude Code hook that blocks malicious installs.",
+  "keywords": [
+    "security",
+    "malware",
+    "supply-chain",
+    "typosquatting",
+    "crypto",
+    "trading-bot",
+    "polymarket",
+    "solidity",
+    "wallet-drainer",
+    "claude-code"
+  ],
   "type": "module",
   "bin": {
     "botguard": "./dist/cli.mjs"
